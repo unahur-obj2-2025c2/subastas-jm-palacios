@@ -28,10 +28,11 @@ public class ProductoSubastado implements ISubastado{
         }
         ofertas.add(nuevaOferta);
         actualizaOfertaInicial(nuevaOferta);
+        notificar(nuevaOferta);
     }
 
     @Override
-    public void registrarSubatador(ISubastador unSubastador) {
+    public void registrarSubastador(ISubastador unSubastador) {
         subastadores.add(unSubastador);
     }
 
@@ -40,9 +41,23 @@ public class ProductoSubastado implements ISubastado{
         subastadores.remove(unSubastador);
     }
 
-    @Override
+    
     public void notificar(Oferta unaOferta) {
         subastadores.forEach(s->s.actualizar(unaOferta));
+    }
+   
+    public void limpiarOfertasYSubastadores(){
+        subastadores.forEach(s->s.reiniciarPuja());
+        subastadores.clear();
+        ofertas.clear();
+    }
+
+    public Oferta ultimaOferta(){
+        return ofertas.getLast();
+    }
+
+    public Integer cantidadOfertas(){
+        return ofertas.size();
     }
     
 }
